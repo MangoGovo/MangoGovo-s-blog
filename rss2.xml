@@ -4,9 +4,9 @@
   xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>勾勾的博客</title>
-    <link>http://example.com/</link>
+    <link>https://blog.mggo.xyz/</link>
     
-    <atom:link href="http://example.com/rss2.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="https://blog.mggo.xyz/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
     <pubDate>Tue, 08 Oct 2024 10:26:04 GMT</pubDate>
@@ -14,8 +14,8 @@
     
     <item>
       <title>这是我第一篇博客</title>
-      <link>http://example.com/2024/10/08/%E8%BF%99%E6%98%AF%E6%88%91%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</link>
-      <guid>http://example.com/2024/10/08/%E8%BF%99%E6%98%AF%E6%88%91%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</guid>
+      <link>https://blog.mggo.xyz/2024/10/08/%E8%BF%99%E6%98%AF%E6%88%91%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</link>
+      <guid>https://blog.mggo.xyz/2024/10/08/%E8%BF%99%E6%98%AF%E6%88%91%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</guid>
       <pubDate>Tue, 08 Oct 2024 10:23:31 GMT</pubDate>
       
         
@@ -33,10 +33,10 @@
       
       
       
-      <category domain="http://example.com/tags/%E6%B5%8B%E8%AF%95/">测试</category>
+      <category domain="https://blog.mggo.xyz/tags/%E6%B5%8B%E8%AF%95/">测试</category>
       
       
-      <comments>http://example.com/2024/10/08/%E8%BF%99%E6%98%AF%E6%88%91%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/#disqus_thread</comments>
+      <comments>https://blog.mggo.xyz/2024/10/08/%E8%BF%99%E6%98%AF%E6%88%91%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/#disqus_thread</comments>
       
     </item>
     
