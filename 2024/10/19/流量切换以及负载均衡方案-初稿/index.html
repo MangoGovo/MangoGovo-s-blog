@@ -19,16 +19,16 @@
   <meta name="author" content="MangoGovo">
   <meta name="keywords" content="">
   
-    <meta name="description" content="MathJax &#x3D; {  tex: {    inlineMath: [[&#39;$&#39;, &#39;$&#39;], [&#39;\\(&#39;, &#39;\\)&#39;]]  }};  流量切换以及负载均衡方案(初稿)当前的问题目前有四条api可以从zf获取数据  外网统一 内网统一 外网正方 内网正方  四条api都存在着不稳定的特点，响应时间也较长。同时内网会在晚上自动屏蔽，这也给负载带来了挑战 对于响应时间较长的问题，可以使用负载均衡在">
+    <meta name="description" content="流量切换以及负载均衡方案(初稿)当前的问题目前有四条api可以从zf获取数据  外网统一 内网统一 外网正方 内网正方  四条api都存在着不稳定的特点，响应时间也较长。同时内网会在晚上自动屏蔽，这也给负载带来了挑战 对于响应时间较长的问题，可以使用负载均衡在最大限度上提供保障。 但是由于api不稳定的特性，就有必要检测api的健康状态，需要在一条api出现问题的时候自动将api从负载均衡的列表中">
 <meta property="og:type" content="article">
 <meta property="og:title" content="流量切换以及负载均衡方案(初稿)">
 <meta property="og:url" content="https://blog.mggo.xyz/2024/10/19/%E6%B5%81%E9%87%8F%E5%88%87%E6%8D%A2%E4%BB%A5%E5%8F%8A%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%96%B9%E6%A1%88-%E5%88%9D%E7%A8%BF/index.html">
 <meta property="og:site_name" content="勾勾的博客">
-<meta property="og:description" content="MathJax &#x3D; {  tex: {    inlineMath: [[&#39;$&#39;, &#39;$&#39;], [&#39;\\(&#39;, &#39;\\)&#39;]]  }};  流量切换以及负载均衡方案(初稿)当前的问题目前有四条api可以从zf获取数据  外网统一 内网统一 外网正方 内网正方  四条api都存在着不稳定的特点，响应时间也较长。同时内网会在晚上自动屏蔽，这也给负载带来了挑战 对于响应时间较长的问题，可以使用负载均衡在">
+<meta property="og:description" content="流量切换以及负载均衡方案(初稿)当前的问题目前有四条api可以从zf获取数据  外网统一 内网统一 外网正方 内网正方  四条api都存在着不稳定的特点，响应时间也较长。同时内网会在晚上自动屏蔽，这也给负载带来了挑战 对于响应时间较长的问题，可以使用负载均衡在最大限度上提供保障。 但是由于api不稳定的特性，就有必要检测api的健康状态，需要在一条api出现问题的时候自动将api从负载均衡的列表中">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blog.mggo.xyz/img/overviewOfPayloadBalance.png">
 <meta property="article:published_time" content="2024-10-18T16:28:33.000Z">
-<meta property="article:modified_time" content="2024-10-18T16:34:18.994Z">
+<meta property="article:modified_time" content="2024-10-19T15:26:13.338Z">
 <meta property="article:author" content="MangoGovo">
 <meta property="article:tag" content="后端">
 <meta property="article:tag" content="负载均衡">
@@ -175,6 +175,18 @@
             </li>
           
         
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
         
           <li class="nav-item" id="search-btn">
             <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
@@ -227,7 +239,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          719 字
+          592 字
         
       </span>
     
@@ -238,7 +250,7 @@
         
         
         
-          6 分钟
+          5 分钟
         
       </span>
     
@@ -280,9 +292,7 @@
             
               <div class="markdown-body">
                 
-                <script>MathJax = {  tex: {    inlineMath: [['$', '$'], ['\\(', '\\)']]  }};</script><script id="MathJax-script" async  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-
-<h1 id="流量切换以及负载均衡方案-初稿"><a href="#流量切换以及负载均衡方案-初稿" class="headerlink" title="流量切换以及负载均衡方案(初稿)"></a>流量切换以及负载均衡方案(初稿)</h1><h2 id="当前的问题"><a href="#当前的问题" class="headerlink" title="当前的问题"></a><strong>当前的问题</strong></h2><p>目前有四条api可以从zf获取数据</p>
+                <h1 id="流量切换以及负载均衡方案-初稿"><a href="#流量切换以及负载均衡方案-初稿" class="headerlink" title="流量切换以及负载均衡方案(初稿)"></a>流量切换以及负载均衡方案(初稿)</h1><h2 id="当前的问题"><a href="#当前的问题" class="headerlink" title="当前的问题"></a><strong>当前的问题</strong></h2><p>目前有四条api可以从zf获取数据</p>
 <ul>
 <li>外网统一</li>
 <li>内网统一</li>
@@ -298,6 +308,9 @@
 <h3 id="如何去维护工作队列"><a href="#如何去维护工作队列" class="headerlink" title="如何去维护工作队列"></a><strong>如何去维护工作队列</strong></h3><p>使用<strong>redis</strong>记录最近<strong>十分钟</strong>的所有请求, 每隔一定时间起一个goroutine进行一次<strong>统计</strong>以及<strong>排序</strong>并<strong>更新工作队列</strong></p>
 <h3 id="更新工作队列"><a href="#更新工作队列" class="headerlink" title="更新工作队列"></a><strong>更新工作队列</strong></h3><p>更新工作队列时为了保证请求的稳定性, 不能修改原工作队列, 而是新开一个工作队列, 并在完成统计工作后将请求指向新的工作队列. <strong>重定向的过程得加锁, 应该是并发造成的数据不一致问题</strong></p>
 <h3 id="负载均衡策略"><a href="#负载均衡策略" class="headerlink" title="负载均衡策略"></a><strong>负载均衡策略</strong></h3><p>根据工作队列, 分配任务量给各个线路,</p>
+<script>MathJax = {  tex: {    inlineMath: [['$', '$'], ['\\(', '\\)']]  }};</script><script id="MathJax-script" async  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script
+
+
 <p>$$<br>流量分配比例:T_i&#x3D;\left(\frac{\frac{1}{x_i}}{\sum \frac{1}{x_i}}\right) \times 100%   (其中x_i表示线路i的延时)<br>$$</p>
 <p>采用加权<a target="_blank" rel="noopener" href="https://www.pdai.tech/md/algorithm/alg-domain-load-balance.html#%E9%9A%8F%E6%9C%BA%E6%B3%95-random">随机法</a>生成一个0-1的随机浮点数来决定采用哪个线路.</p>
 <h3 id="告警"><a href="#告警" class="headerlink" title="告警"></a><strong>告警</strong></h3><p>当有线路长时间在死亡队列中(2h?), 无法唤醒, 发邮件告警.</p>
