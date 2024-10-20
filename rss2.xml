@@ -9,8 +9,33 @@
     <atom:link href="https://blog.mggo.xyz/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Sat, 19 Oct 2024 15:26:13 GMT</pubDate>
+    <pubDate>Sun, 20 Oct 2024 17:05:38 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>在openWrt部署阿里云的DDNS</title>
+      <link>https://blog.mggo.xyz/2024/10/20/%E5%9C%A8OpenWrt%E9%83%A8%E7%BD%B2%E9%98%BF%E9%87%8C%E4%BA%91%E5%9F%9F%E5%90%8D%E7%9A%84DDNS/</link>
+      <guid>https://blog.mggo.xyz/2024/10/20/%E5%9C%A8OpenWrt%E9%83%A8%E7%BD%B2%E9%98%BF%E9%87%8C%E4%BA%91%E5%9F%9F%E5%90%8D%E7%9A%84DDNS/</guid>
+      <pubDate>Sun, 20 Oct 2024 15:49:46 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;h1 id=&quot;在OpenWrt部署阿里云域名的DDNS&quot;&gt;&lt;a href=&quot;#在OpenWrt部署阿里云域名的DDNS&quot; class=&quot;headerlink&quot;</description>
+          
+        
+      
+      
+      
+      
+      
+      <category domain="https://blog.mggo.xyz/tags/openWrt-DDns/">openWrt DDns</category>
+      
+      
+      <comments>https://blog.mggo.xyz/2024/10/20/%E5%9C%A8OpenWrt%E9%83%A8%E7%BD%B2%E9%98%BF%E9%87%8C%E4%BA%91%E5%9F%9F%E5%90%8D%E7%9A%84DDNS/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>流量切换以及负载均衡方案(初稿)</title>
