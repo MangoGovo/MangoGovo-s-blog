@@ -9,8 +9,33 @@
     <atom:link href="https://blog.mggo.xyz/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Sun, 20 Oct 2024 17:05:38 GMT</pubDate>
+    <pubDate>Mon, 21 Oct 2024 09:47:54 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Go的并发编程</title>
+      <link>https://blog.mggo.xyz/2024/10/21/go%E7%9A%84%E5%B9%B6%E5%8F%91/</link>
+      <guid>https://blog.mggo.xyz/2024/10/21/go%E7%9A%84%E5%B9%B6%E5%8F%91/</guid>
+      <pubDate>Mon, 21 Oct 2024 07:36:35 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;h1 id=&quot;Go的并发编程&quot;&gt;&lt;a href=&quot;#Go的并发编程&quot; class=&quot;headerlink&quot; title=&quot;Go的并发编程&quot;&gt;&lt;/a&gt;Go的并发编程&lt;/h1&gt;&lt;h2 id=&quot;1-并发介绍&quot;&gt;&lt;a href=&quot;#1-并发介绍&quot; class=&quot;headerlink&quot;</description>
+          
+        
+      
+      
+      
+      
+      
+      <category domain="https://blog.mggo.xyz/tags/Golang-%E5%B9%B6%E5%8F%91/">Golang 并发</category>
+      
+      
+      <comments>https://blog.mggo.xyz/2024/10/21/go%E7%9A%84%E5%B9%B6%E5%8F%91/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>在openWrt部署阿里云的DDNS</title>
