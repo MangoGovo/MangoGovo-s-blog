@@ -28,8 +28,10 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blog.mggo.xyz/images/go%E7%9A%84%E5%B9%B6%E5%8F%91/image-20241021171723178.png">
 <meta property="og:image" content="https://blog.mggo.xyz/images/go%E7%9A%84%E5%B9%B6%E5%8F%91/image-20241021171741430.png">
+<meta property="og:image" content="https://www.topgoer.com/static/7.1/3.png">
+<meta property="og:image" content="https://www.topgoer.com/static/7.1/4.png">
 <meta property="article:published_time" content="2024-10-21T07:36:35.000Z">
-<meta property="article:modified_time" content="2024-10-21T12:07:17.809Z">
+<meta property="article:modified_time" content="2024-10-23T07:06:09.420Z">
 <meta property="article:author" content="MangoGovo">
 <meta property="article:tag" content="Golang 并发">
 <meta name="twitter:card" content="summary_large_image">
@@ -239,7 +241,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.4k 字
+          3.4k 字
         
       </span>
     
@@ -250,7 +252,7 @@
         
         
         
-          21 分钟
+          29 分钟
         
       </span>
     
@@ -383,6 +385,80 @@
 <h4 id="goroutine在调度方面的优势-轻量的协程-高效的调度器"><a href="#goroutine在调度方面的优势-轻量的协程-高效的调度器" class="headerlink" title="goroutine在调度方面的优势 (轻量的协程+高效的调度器)"></a>goroutine在调度方面的优势 (轻量的协程+高效的调度器)</h4><p>单从线程调度讲, Go语言相比起其他语言的优势在于OS线程是由OS内核来调度的, goroutine则是由Go运行时（runtime）自己的调度器调度的.</p>
 <p>这个调度器使用一个称为<code>m:n调度</code>的技术（复用&#x2F;调度m个goroutine到n个OS线程）. 其一大特点是goroutine的调度是在<strong>用户态</strong>下完成的, 不涉及内核态与用户态之间的频繁切换, 包括内存的分配与释放,都是在用户态维护着一块大的内存池, 不直接调用系统的<code>malloc</code>函数（除非内存池需要改变）成本比调度OS线程低很多. </p>
 <p>另一方面充分利用了多核的硬件资源, 近似的把若干goroutine均分在物理线程上, 再加上本身goroutine的<strong>超轻量</strong>,以上种种保证了go调度方面的性能.</p>
+<h2 id="3-Channel"><a href="#3-Channel" class="headerlink" title="3. Channel"></a>3. Channel</h2><blockquote>
+<p>Goroutine 奉行通过通信 (Channel) 来共享内存, 而不是共享内存来通信.</p>
+</blockquote>
+<p>如果说goroutine是Go程序并发的执行体，<strong>channel</strong>就是它们之间的连接。<strong>channel</strong>是可以让一个goroutine发送特定值到另一个goroutine的通信机制.</p>
+<p>Go 语言中的通道（channel）是一种特殊的类型。通道像一个传送带或者队列，总是遵循先入先出（First In First Out）的规则，保证收发数据的顺序。每一个通道都是一个具体类型的导管，也就是声明channel的时候需要为其指定元素类型。</p>
+<h3 id="3-1-Channel的类型"><a href="#3-1-Channel的类型" class="headerlink" title="3.1 Channel的类型"></a>3.1 Channel的类型</h3><p>channel是一种类型，一种引用类型。声明通道类型的格式如下:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> [name] <span class="hljs-keyword">chan</span> [<span class="hljs-keyword">type</span>]<br><span class="hljs-comment">// eg:</span><br><span class="hljs-keyword">var</span> ch1 <span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>   <span class="hljs-comment">// 声明一个传递整型的通道</span><br><span class="hljs-keyword">var</span> ch2 <span class="hljs-keyword">chan</span> <span class="hljs-type">bool</span>  <span class="hljs-comment">// 声明一个传递布尔型的通道</span><br><span class="hljs-keyword">var</span> ch3 <span class="hljs-keyword">chan</span> []<span class="hljs-type">int</span> <span class="hljs-comment">// 声明一个传递int切片的通道</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-1-2-创建channel"><a href="#3-1-2-创建channel" class="headerlink" title="3.1.2 创建channel"></a>3.1.2 创建channel</h3><p>通道是引用类型，通道类型的空值是<code>nil</code>.</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> ch <span class="hljs-keyword">chan</span> <span class="hljs-type">int</span><br>fmt.Println(ch) <span class="hljs-comment">// &lt;nil&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>声明的通道后需要使用<code>make</code>函数初始化之后才能使用。</p>
+<p>创建channel的格式如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> [<span class="hljs-keyword">type</span>], [bufferSize])<br><span class="hljs-comment">// eg:</span><br>ch4 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)<br>ch5 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">bool</span>)<br>ch6 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> []<span class="hljs-type">int</span>)<br></code></pre></td></tr></table></figure>
+
+<p>channel的<code>bufferSize</code>是<strong>可选</strong>的.</p>
+<h3 id="3-1-3-channel的操作"><a href="#3-1-3-channel的操作" class="headerlink" title="3.1.3 channel的操作"></a>3.1.3 channel的操作</h3><p>通道有<strong>发送</strong>（send）、<strong>接收</strong>(receive）和<strong>关闭</strong>（close）三种操作。</p>
+<p>发送和接收都使用&lt;-符号。</p>
+<p>现在我们先使用以下语句定义一个通道：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)<br></code></pre></td></tr></table></figure>
+
+<h4 id="发送"><a href="#发送" class="headerlink" title="发送"></a>发送</h4><p>将一个值发送到通道中。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">ch &lt;- <span class="hljs-number">10</span> <span class="hljs-comment">// 把10发送到ch中</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="接收"><a href="#接收" class="headerlink" title="接收"></a>接收</h4><p>从一个通道中接收值。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">x := &lt;- ch <span class="hljs-comment">// 从ch中接收值并赋值给变量x</span><br>&lt;-ch       <span class="hljs-comment">// 从ch中接收值，忽略结果</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="关闭"><a href="#关闭" class="headerlink" title="关闭"></a>关闭</h4><p>我们通过调用内置的close函数来关闭通道。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-built_in">close</span>(ch)<br></code></pre></td></tr></table></figure>
+
+<p>关于关闭通道需要注意的事情是:</p>
+<ul>
+<li>只有在通知接收方goroutine所有的数据都发送完毕的时候才需要关闭通道</li>
+<li><strong>通道</strong>是可以被<strong>垃圾回收机制回收</strong>的</li>
+<li>它和<strong>关闭文件</strong>是不一样的, 在结束操作之后关闭文件是<strong>必须</strong>要做的, 但关闭通道<strong>不是必须</strong>的。</li>
+</ul>
+<p><strong>关闭后的通道</strong>有以下特点：</p>
+<ul>
+<li>再发送值就会导致<span style="color: red;"><strong>Panic</strong></span></li>
+<li>进行接收, 会一直获取缓冲里的值, 直到通道为空, 而后再接收会获取到 对应类型的<strong>空值</strong>, 并返回<strong>false</strong></li>
+<li>关闭一个已经关闭的通道会导致<span style="color: red;"><strong>Panic</strong></span></li>
+</ul>
+<h3 id="3-1-4-无缓冲的Channel"><a href="#3-1-4-无缓冲的Channel" class="headerlink" title="3.1.4 无缓冲的Channel"></a>3.1.4 无缓冲的Channel</h3><img src="https://www.topgoer.com/static/7.1/3.png" srcset="/img/loading.gif" lazyload alt="img" style="zoom:80%;" />
+
+<p>无缓冲的channel是阻塞的.</p>
+<p>比如说以下代码:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)<br>    ch &lt;- <span class="hljs-number">10</span><br>    fmt.Println(<span class="hljs-string">&quot;发送成功&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>虽然可以通过编译, 但是运行后会发现:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">fatal <span class="hljs-type">error</span>: all goroutines are asleep - deadlock!<br></code></pre></td></tr></table></figure>
+
+<p>这是因为:</p>
+<ul>
+<li><p>我们在创建channel的时候没有指定<code>bufferSize</code>, 则创建的是<strong>无缓冲</strong>的通道.</p>
+</li>
+<li><p>因为没有缓冲去暂存, 所以无缓冲的通道只有在有人接收值的时候才能发送值.</p>
+</li>
+<li><p>一种解决方法是, 起一个goroutine去接收, 这里不展开.</p>
+</li>
+</ul>
+<p>使用无缓冲通道进行通信, 将导致发送和接收的goroutine同步化, 因此，无缓冲通道也被称为<strong>同步通道</strong>。</p>
+<h3 id="3-1-5-有缓冲的channel"><a href="#3-1-5-有缓冲的channel" class="headerlink" title="3.1.5 有缓冲的channel"></a>3.1.5 有缓冲的channel</h3><p>解决上面问题的方法还有一种就是使用<strong>有缓冲区的</strong>通道, 如下图所示:</p>
+<p><img src="https://www.topgoer.com/static/7.1/4.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>创建channel的时候指定<code>bufferSize</code>, 则创建的是<strong>有缓冲</strong>的通道.</p>
+<p>当缓冲区被填满时, 在往里传值将阻塞.</p>
+<p><del>我们可以使用内置的len函数获取通道内元素的数量，使用cap函数获取通道的容量</del>.(基本上没必要)</p>
+<h3 id="3-1-6-关闭Channel"><a href="#3-1-6-关闭Channel" class="headerlink" title="3.1.6 关闭Channel"></a>3.1.6 关闭Channel</h3><p>我们使用<code>close()</code>来关闭一个channel.</p>
+<p>如果你的管道不往里存值或者取值的时候一定记得关闭管道, 避免内存泄漏.</p>
+<h3 id="3-1-7-循环取值"><a href="#3-1-7-循环取值" class="headerlink" title="3.1.7 循环取值"></a>3.1.7 循环取值</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">for</span> &#123;<br>    i, ok := &lt;-ch1 <span class="hljs-comment">// 通道关闭后再取值ok=false</span><br>    <span class="hljs-keyword">if</span> !ok &#123;<br>        <span class="hljs-keyword">break</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-1-8-单向通道"><a href="#3-1-8-单向通道" class="headerlink" title="3.1.8 单向通道"></a>3.1.8 单向通道</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">chan</span>&lt;- <span class="hljs-type">int</span> <span class="hljs-comment">// 只能进</span><br>&lt;-<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span> <span class="hljs-comment">// 只能出</span><br></code></pre></td></tr></table></figure>
+
+
+
 
                 
               </div>
