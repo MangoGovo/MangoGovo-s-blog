@@ -77,6 +77,27 @@
 <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/rss2.xml" title="勾勾的博客" type="application/rss+xml">
 </head>
 
+<script>
+  // 定义头像图片的 URL 数组
+  const imgs = [
+        "/img/avatars/1.gif",
+        "/img/avatars/2.gif",
+        "/img/avatars/3.gif",
+        "/img/avatars/4.gif",
+        "/img/avatars/5.gif",
+  ];
+
+  // 随机选择一个图片 URL
+  const luck_img = imgs[Math.floor(Math.random() * imgs.length)];
+
+  // 找到头像的 img 元素并设置新的 src
+  document.addEventListener("DOMContentLoaded", function() {
+    const avatar = document.querySelector("div.about-avatar img");
+    if (avatar) {
+      avatar.src = luck_img;
+    }
+  });
+</script>
 
 <body>
 
@@ -217,6 +238,7 @@
 
 </div>
 
+    
   </header>
 
   <main>
@@ -421,7 +443,8 @@
 
   
   <!--添加代码-->
-  <!--鼠标点击礼花特效-->
+    
+  
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
